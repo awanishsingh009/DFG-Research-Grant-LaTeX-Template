@@ -1,0 +1,41 @@
+# LaTeX build products
+build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+*~
+.idea/
+.vscode/
+
+# Local official-document snapshot
+official-dfg-documents/*
+!official-dfg-documents/README.md
+
+# Proposal-specific private material
+private/
+local/
+secrets/
+*.key
+*.pem
+*.p12
+
+# Archives
+*.zip
+*.7z
+*.tar
+*.tar.gz
