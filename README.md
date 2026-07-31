@@ -87,6 +87,9 @@ make strict
 
 Complete `CURRENT_DFG_COMPLIANCE_CHECKLIST.md` and visually inspect every page.
 
+For repository publication and release checks, follow
+[`docs/PUBLISHING_CHECKLIST.md`](docs/PUBLISHING_CHECKLIST.md).
+
 ## Repository structure
 
 ```text
