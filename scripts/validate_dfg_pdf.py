@@ -12,7 +12,7 @@ from pathlib import Path
 __author__ = "Dr. Awanish Pratap Singh"
 
 
-REQUIRED_SOURCE_MARKERS = (
+ENGLISH_REQUIRED_SOURCE_MARKERS = (
     r"\DFGMainPageLimitNotice",
     r"\DFGSection{1}{Starting Point}",
     r"\DFGSection{2}{Objectives and work programme}",
@@ -68,6 +68,68 @@ REQUIRED_SOURCE_MARKERS = (
     r"\DFGSubsection{5.7}{Module Public Relations}",
     r"\DFGSubsection{5.8}{Module Standard Allowance for Equity and Diversity}",
 )
+
+GERMAN_REQUIRED_SOURCE_MARKERS = (
+    r"\DFGMainPageLimitNotice",
+    r"\DFGSection{1}{Ausgangslage}",
+    r"\DFGSection{2}{Ziele und Arbeitsprogramm}",
+    r"\DFGStackedSubsection{2.1}{Voraussichtliche Gesamtdauer des Projekts}",
+    r"\DFGSubsection{2.2}{Ziele}",
+    r"\DFGSubsection{2.3}{Arbeitsprogramm inkl. vorgesehener Untersuchungsmethoden}",
+    r"\DFGSubsection{2.4}{Umgang mit Forschungsdaten}",
+    r"\DFGSubsection{2.5}{Relevanz von Geschlecht und/oder Diversität im Forschungsvorhaben}",
+    r"\DFGSection{3}{Projekt- und themenbezogenes Literaturverzeichnis}",
+    r"\DFGStartReferences",
+    r"\DFGEndReferences",
+    r"\DFGStartSupplement",
+    r"\DFGSection{4}{Begleitinformationen zum Forschungskontext}",
+    r"\DFGSupplementPageLimitNotice",
+    r"\DFGStackedSubsection{4.1}{Angaben zu ethischen und/oder rechtlichen Aspekten des Vorhabens}",
+    r"\DFGStackedSubsubsection{4.1.1}{Allgemeine ethische Aspekte}",
+    r"\DFGSubsubsection{4.1.2}{Erläuterungen zu den vorgesehenen Untersuchungen am Menschen, an vom Menschen entnommenem Material oder mit identifizierbaren Daten}",
+    r"\DFGSubsubsection{4.1.3}{Erläuterungen zu den vorgesehenen Untersuchungen bei Versuchen an Tieren}",
+    r"\DFGSubsubsection{4.1.4}{Erläuterungen zu Forschungsvorhaben an genetischen Ressourcen (oder darauf bezogenem traditionellem Wissen) aus dem Ausland}",
+    r"\DFGSubsubsection{4.1.5}{Erläuterungen zu möglichen sicherheitsrelevanten Aspekten}",
+    r"\DFGDeepSubsubsection{4.1.5.1}{„Dual-Use Research of Concern“; Außenwirtschaftsrecht}",
+    r"\DFGDeepSubsubsection{4.1.5.2}{Risiken in internationalen Kooperationen}",
+    r"\DFGSubsubsection{4.1.6}{Reflexion zu ökologischen Nachhaltigkeitsaspekten in der Planung und Durchführung des Vorhabens}",
+    r"\DFGSubsection{4.2}{Angaben zur Dienststellung}",
+    r"\DFGSubsection{4.3}{Angaben zur Erstantragstellung}",
+    r"\DFGSubsection{4.4}{Zusammensetzung der Projektarbeitsgruppe}",
+    r"\DFGSubsection{4.5}{Zusammenarbeit mit Wissenschaftler*innen in Deutschland in diesem Projekt}",
+    r"\DFGSubsection{4.6}{Zusammenarbeit mit Wissenschaftler*innen im Ausland in diesem Projekt}",
+    r"\DFGSubsection{4.7}{Wissenschaftler*innen, mit denen in den letzten drei Jahren wissenschaftlich zusammengearbeitet wurde}",
+    r"\DFGSubsection{4.8}{Projektrelevante Zusammenarbeit mit erwerbswirtschaftlichen Unternehmen}",
+    r"\DFGSubsection{4.9}{Projektrelevante Beteiligungen an erwerbswirtschaftlichen Unternehmen}",
+    r"\DFGSubsection{4.10}{Apparative Ausstattung}",
+    r"\DFGSubsection{4.11}{Weitere Antragstellungen}",
+    r"\DFGSubsection{4.12}{Weitere Angaben}",
+    r"\DFGSection{5}{Beantragte Module/Mittel}",
+    r"\DFGStackedSubsection{5.1}{Basismodul}",
+    r"\DFGStackedSubsubsection{5.1.1}{Personalmittel}",
+    r"\DFGSubsubsection{5.1.2}{Sachmittel}",
+    r"\DFGStackedDeepSubsubsection{5.1.2.1}{Geräte bis 10.000 Euro, Software und Verbrauchsmaterial}",
+    r"\DFGDeepSubsubsection{5.1.2.2}{Reisemittel}",
+    r"\DFGDeepSubsubsection{5.1.2.3}{Mittel für wissenschaftliche Gäste (ausgenommen Mercator-Fellow)}",
+    r"\DFGDeepSubsubsection{5.1.2.4}{Mittel für Versuchstiere}",
+    r"\DFGDeepSubsubsection{5.1.2.5}{Sonstige Mittel}",
+    r"\DFGDeepSubsubsection{5.1.2.6}{Publikationsmittel}",
+    r"\DFGSubsubsection{5.1.3}{Investitionsmittel}",
+    r"\DFGStackedDeepSubsubsection{5.1.3.1}{Geräte über 10.000 Euro}",
+    r"\DFGDeepSubsubsection{5.1.3.2}{Großgeräte über 50.000 Euro}",
+    r"\DFGSubsection{5.2}{Modul Eigene Stelle}",
+    r"\DFGSubsection{5.3}{Modul Vertretung}",
+    r"\DFGSubsection{5.4}{Modul Rotationsstellen}",
+    r"\DFGSubsection{5.5}{Modul Mercator Fellow}",
+    r"\DFGSubsection{5.6}{Modul Projektspezifische Workshops}",
+    r"\DFGSubsection{5.7}{Modul Öffentlichkeitsarbeit}",
+    r"\DFGSubsection{5.8}{Modul Pauschale für Chancengleichheitsmaßnahmen}",
+)
+
+REQUIRED_SOURCE_MARKERS = {
+    "english": ENGLISH_REQUIRED_SOURCE_MARKERS,
+    "german": GERMAN_REQUIRED_SOURCE_MARKERS,
+}
 
 
 class Report:
@@ -161,7 +223,7 @@ def parse_pdfinfo(output: str) -> dict[str, str]:
     return info
 
 
-def validate_source(source: Path, allow_guidance: bool, report: Report) -> None:
+def validate_source(source: Path, language: str, allow_guidance: bool, report: Report) -> None:
     try:
         text = collect_tex(source)
     except (OSError, UnicodeError) as exc:
@@ -176,28 +238,43 @@ def validate_source(source: Path, allow_guidance: bool, report: Report) -> None:
         options = {item.strip() for item in class_match.group(1).split(",")}
         if "current" not in options:
             report.fail("dfgproposal class is not in current mode")
+        elif language not in options:
+            report.fail(f"dfgproposal class does not declare the {language} language option")
         elif not allow_guidance and "submission" not in options:
-            report.fail("strict QA requires \\documentclass[current,submission]{dfgproposal}")
+            report.fail("strict QA requires the submission class option")
         else:
-            report.ok("class mode")
+            report.ok(f"class mode and {language} language")
 
-    missing = [marker for marker in REQUIRED_SOURCE_MARKERS if marker not in compact]
+    missing = [marker for marker in REQUIRED_SOURCE_MARKERS[language] if marker not in compact]
     if missing:
         report.fail(f"missing or renamed current-form structure ({len(missing)} markers)")
     else:
         report.ok("current 53.01 structure")
 
-    boundary_markers = (
-        r"\DFGMainPageLimitNotice",
-        r"\DFGSection{1}{Starting Point}",
-        r"\DFGSection{3}{Project- and subject-related list of publications}",
-        r"\DFGStartReferences",
-        r"\DFGEndReferences",
-        r"\DFGStartSupplement",
-        r"\DFGSection{4}{Supplementary information on the research context}",
-        r"\DFGSupplementPageLimitNotice",
-        r"\DFGStackedSubsection{4.1}{Ethical and/or legal aspects of the project}",
-    )
+    if language == "german":
+        boundary_markers = (
+            r"\DFGMainPageLimitNotice",
+            r"\DFGSection{1}{Ausgangslage}",
+            r"\DFGSection{3}{Projekt- und themenbezogenes Literaturverzeichnis}",
+            r"\DFGStartReferences",
+            r"\DFGEndReferences",
+            r"\DFGStartSupplement",
+            r"\DFGSection{4}{Begleitinformationen zum Forschungskontext}",
+            r"\DFGSupplementPageLimitNotice",
+            r"\DFGStackedSubsection{4.1}{Angaben zu ethischen und/oder rechtlichen Aspekten des Vorhabens}",
+        )
+    else:
+        boundary_markers = (
+            r"\DFGMainPageLimitNotice",
+            r"\DFGSection{1}{Starting Point}",
+            r"\DFGSection{3}{Project- and subject-related list of publications}",
+            r"\DFGStartReferences",
+            r"\DFGEndReferences",
+            r"\DFGStartSupplement",
+            r"\DFGSection{4}{Supplementary information on the research context}",
+            r"\DFGSupplementPageLimitNotice",
+            r"\DFGStackedSubsection{4.1}{Ethical and/or legal aspects of the project}",
+        )
     boundary_positions = [compact.find(marker) for marker in boundary_markers]
     if any(position < 0 for position in boundary_positions):
         report.fail("cannot verify the 17/8 boundary because a boundary marker is missing")
@@ -211,7 +288,16 @@ def validate_source(source: Path, allow_guidance: bool, report: Report) -> None:
         unresolved.append("DFGInstruction")
     if r"\DFGDecisionRequired" in compact:
         unresolved.append("DFGDecisionRequired")
-    for token in ("[First name", "[Project title]", "[last name", "[Text]", "TODO", "FIXME"):
+    for token in (
+        "[First name",
+        "[Project title]",
+        "[last name",
+        "[Name, Vorname",
+        "[Titel des Projekts]",
+        "[Text]",
+        "TODO",
+        "FIXME",
+    ):
         if token in compact:
             unresolved.append(token)
     if unresolved and not allow_guidance:
@@ -225,7 +311,7 @@ def validate_source(source: Path, allow_guidance: bool, report: Report) -> None:
         report.warn("an empty DFGNotApplicable reason remains")
 
 
-def validate_pdf(pdf: Path, allow_guidance: bool, report: Report) -> None:
+def validate_pdf(pdf: Path, language: str, allow_guidance: bool, report: Report) -> None:
     if not pdf.is_file():
         report.fail(f"PDF not found: {pdf}")
         return
@@ -320,7 +406,10 @@ def validate_pdf(pdf: Path, allow_guidance: bool, report: Report) -> None:
     physical_pages = extracted.split("\f")
     if physical_pages and not physical_pages[-1].strip():
         physical_pages.pop()
-    header_pattern = re.compile(r"page\s+(\d+)\s+of\s+max\.?\s*(17|8)", re.IGNORECASE)
+    if language == "german":
+        header_pattern = re.compile(r"Seite\s+(\d+)\s+von\s+max\.?\s*(17|8)", re.IGNORECASE)
+    else:
+        header_pattern = re.compile(r"page\s+(\d+)\s+of\s+max\.?\s*(17|8)", re.IGNORECASE)
     headers = []
     for index, page_text in enumerate(physical_pages, start=1):
         match = header_pattern.search(page_text)
@@ -350,7 +439,12 @@ def validate_pdf(pdf: Path, allow_guidance: bool, report: Report) -> None:
         report.ok("17-page/8-page header sequences")
 
     first_supplement_text = re.sub(r"\s+", " ", physical_pages[split])
-    if not re.search(r"\b4\s+Supplementary information on the research context\b", first_supplement_text):
+    supplement_heading = (
+        r"\b4\s+Begleitinformationen zum Forschungskontext\b"
+        if language == "german"
+        else r"\b4\s+Supplementary information on the research context\b"
+    )
+    if not re.search(supplement_heading, first_supplement_text):
         report.fail("section 4 does not begin on supplement page 1")
     else:
         report.ok("section 4 boundary")
@@ -361,6 +455,12 @@ def main() -> int:
     parser.add_argument("source", type=Path, help="main project .tex file")
     parser.add_argument("pdf", type=Path, help="compiled project PDF")
     parser.add_argument(
+        "--language",
+        choices=("english", "german"),
+        default="english",
+        help="template language used by the source and PDF",
+    )
+    parser.add_argument(
         "--allow-guidance",
         action="store_true",
         help="allow master-template guidance and placeholder metadata",
@@ -368,8 +468,8 @@ def main() -> int:
     args = parser.parse_args()
 
     report = Report()
-    validate_source(args.source, args.allow_guidance, report)
-    validate_pdf(args.pdf, args.allow_guidance, report)
+    validate_source(args.source, args.language, args.allow_guidance, report)
+    validate_pdf(args.pdf, args.language, args.allow_guidance, report)
     return report.emit()
 
 

@@ -18,7 +18,7 @@ Use this checklist for every project copied from `main.tex`.
 
 ## 2. Template and page gate
 
-- [ ] Use `\documentclass[current,submission]{dfgproposal}` for the release build.
+- [ ] Use `\documentclass[current,submission,english]{dfgproposal}` for the release build.
 - [ ] Keep the official section wording, order and numbering.
 - [ ] Sections 1--3 occupy no more than 17 logical pages.
 - [ ] Section 4 onward occupies no more than 8 logical pages.
@@ -89,7 +89,7 @@ Use this checklist for every project copied from `main.tex`.
 
 ## 7. Automated and visual release gate
 
-- [ ] Run `make strict SOURCE=main.tex` or `scripts/build.ps1 -Strict` successfully.
+- [ ] Run `make english-strict` or `scripts/build.ps1 -Language english -Strict` successfully.
 - [ ] The source contains no `\DFGInstruction`, `\DFGDecisionRequired`, placeholder metadata, TODO or FIXME marker.
 - [ ] XeLaTeX log has no overfull/underfull box, missing-character, undefined-control-sequence, LaTeX, package or class warning requiring resolution.
 - [ ] PDF is A4, no more than 10 MB, unencrypted, readable, copyable and printable.

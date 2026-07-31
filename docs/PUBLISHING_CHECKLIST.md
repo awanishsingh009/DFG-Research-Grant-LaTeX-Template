@@ -33,6 +33,12 @@
   git ls-files
   ```
 
+- [ ] Build and validate both language templates:
+
+  ```powershell
+  powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
+  ```
+
 ## Recommended repository information
 
 - Description: `Unofficial reusable LaTeX template for DFG Research Grant project descriptions.`
@@ -66,7 +72,7 @@ Review the remote URL before pushing.
 
 - [ ] Recheck the live DFG forms page.
 - [ ] Update `guideline-versions.tex`, the source register and changelog.
-- [ ] Compile in guidance mode and run automated QA.
+- [ ] Compile both languages in guidance mode and run automated QA.
 - [ ] Compile a strict example separately when suitable test content is
       available.
 - [ ] Inspect every rendered page.

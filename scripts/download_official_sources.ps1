@@ -9,16 +9,26 @@ $destinationPath = Join-Path $projectRoot $Destination
 New-Item -ItemType Directory -Path $destinationPath -Force | Out-Null
 
 $sources = @(
+    @{ Name = "1-91-de.pdf"; Uri = "https://www.dfg.de/resource/blob/167384/1-91-de.pdf" },
     @{ Name = "1-91-en.pdf"; Uri = "https://www.dfg.de/resource/blob/167386/1-91-en.pdf" },
+    @{ Name = "10-206-de.pdf"; Uri = "https://www.dfg.de/resource/blob/167420/10-206-de.pdf" },
     @{ Name = "10-206-en.pdf"; Uri = "https://www.dfg.de/resource/blob/167422/10-206-en.pdf" },
+    @{ Name = "50-01-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168070/50-01-de.pdf" },
     @{ Name = "50-01-en.pdf"; Uri = "https://www.dfg.de/resource/blob/168072/50-01-en.pdf" },
+    @{ Name = "52-01-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168128/52-01-de.pdf" },
     @{ Name = "52-01-en.pdf"; Uri = "https://www.dfg.de/resource/blob/168130/52-01-en.pdf" },
+    @{ Name = "52-14-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168180/52-14-de.pdf" },
     @{ Name = "52-14-en.pdf"; Uri = "https://www.dfg.de/resource/blob/168182/52-14-en.pdf" },
+    @{ Name = "53-01-de-elan.rtf"; Uri = "https://www.dfg.de/resource/blob/168204/53-01-de-elan.rtf" },
     @{ Name = "53-01-en-elan.rtf"; Uri = "https://www.dfg.de/resource/blob/168206/53-01-en-elan.rtf" },
+    @{ Name = "53-200-de-elan.rtf"; Uri = "https://www.dfg.de/resource/blob/168272/53-200-de-elan.rtf" },
     @{ Name = "53-200-en-elan.rtf"; Uri = "https://www.dfg.de/resource/blob/168274/53-200-en-elan.rtf" },
+    @{ Name = "54-01-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168312/54-01-de.pdf" },
     @{ Name = "54-01-en.pdf"; Uri = "https://www.dfg.de/resource/blob/168314/54-01-en.pdf" },
+    @{ Name = "54-020-de.pdf"; Uri = "https://www.dfg.de/resource/blob/330104/54-020-de.pdf" },
     @{ Name = "54-020-en.pdf"; Uri = "https://www.dfg.de/resource/blob/331878/54-020-en.pdf" },
     @{ Name = "55-03-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168402/55-03-de.pdf" },
+    @{ Name = "55-04-de.pdf"; Uri = "https://www.dfg.de/resource/blob/168404/55-04-de.pdf" },
     @{ Name = "55-04-en.pdf"; Uri = "https://www.dfg.de/resource/blob/168406/55-04-en.pdf" },
     @{ Name = "form-changes.pdf"; Uri = "https://www.dfg.de/resource/blob/334100/sachbeihilfe-info-vordrucksaenderungen.pdf" }
 )

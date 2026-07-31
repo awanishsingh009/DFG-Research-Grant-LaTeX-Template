@@ -1,5 +1,6 @@
 # LaTeX build products
 build/
+tmp/
 *.aux
 *.bbl
 *.bcf

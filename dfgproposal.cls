@@ -4,14 +4,18 @@
 
 \newif\ifdfglegacy
 \newif\ifdfgsubmission
+\newif\ifdfggerman
 \dfglegacyfalse
 \dfgsubmissionfalse
+\dfggermanfalse
 \DeclareOption{dfg000}{\dfglegacytrue}
 \DeclareOption{current}{\dfglegacyfalse}
 \DeclareOption{guidance}{\dfgsubmissionfalse}
 \DeclareOption{submission}{\dfgsubmissiontrue}
+\DeclareOption{english}{\dfggermanfalse}
+\DeclareOption{german}{\dfggermantrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ExecuteOptions{current,guidance}
+\ExecuteOptions{current,guidance,english}
 \ProcessOptions\relax
 
 \LoadClass[11pt,a4paper]{article}
@@ -22,6 +26,11 @@
 \fi
 
 \RequirePackage{fontspec}
+\ifdfggerman
+  \RequirePackage[ngerman]{babel}
+\else
+  \RequirePackage[english]{babel}
+\fi
 \IfFontExistsTF{Arial}{%
   \setmainfont{Arial}[Ligatures=TeX]
   \newcommand{\DFGResolvedFont}{Arial}%
@@ -116,7 +125,11 @@
     labelsep=space,justification=justified,singlelinecheck=false,skip=3pt}
 \fi
 
-\newcommand{\DFGFormLabel}{DFG form 53.01}
+\ifdfggerman
+  \newcommand{\DFGFormLabel}{DFG-Vordruck 53.01}
+\else
+  \newcommand{\DFGFormLabel}{DFG form 53.01}
+\fi
 \newcommand{\DFGProjectDescriptionRevision}{09/25}
 \newcommand{\DFGProposalInstructionsRevision}{06/26}
 \newcommand{\DFGMainPageMaximum}{17}
@@ -129,15 +142,30 @@
 \newcommand{\DFGMaximumLabel}{max.}
 \newcommand{\DFGPageMaximum}{\DFGMainPageMaximum}
 
-\newcommand{\DFGDocumentTitle}{Project Description -- Project Proposals}
-\newcommand{\DFGApplicantName}{[First name, last name, city]}
+\ifdfggerman
+  \newcommand{\DFGDocumentTitle}{Beschreibung des Vorhabens -- Projektanträge}
+  \newcommand{\DFGMainMatterTitle}{Beschreibung des Vorhabens}
+  \newcommand{\DFGApplicantName}{[Name, Vorname, Ort]}
+  \newcommand{\DFGProjectTitle}{[Titel des Projekts]}
+  \newcommand{\DFGPageWord}{Seite}
+  \newcommand{\DFGOfWord}{von}
+  \newcommand{\DFGGuidanceLabel}{Hinweis zur Vorlage}
+\else
+  \newcommand{\DFGDocumentTitle}{Project Description -- Project Proposals}
+  \newcommand{\DFGMainMatterTitle}{Project Description}
+  \newcommand{\DFGApplicantName}{[First name, last name, city]}
+  \newcommand{\DFGProjectTitle}{[Project title]}
+  \newcommand{\DFGPageWord}{page}
+  \newcommand{\DFGOfWord}{of}
+  \newcommand{\DFGGuidanceLabel}{Template guidance}
+\fi
 \newcommand{\DFGApplicantBirthNationality}{}
 \newcommand{\DFGApplicantAffiliation}{}
 \newcommand{\DFGApplicantContact}{}
-\newcommand{\DFGProjectTitle}{[Project title]}
 \newcommand{\DFGKeywords}{}
 
 \newcommand{\DFGSetDocumentTitle}[1]{\renewcommand{\DFGDocumentTitle}{#1}}
+\newcommand{\DFGSetMainMatterTitle}[1]{\renewcommand{\DFGMainMatterTitle}{#1}}
 \newcommand{\DFGSetApplicantName}[1]{\renewcommand{\DFGApplicantName}{#1}}
 \newcommand{\DFGSetApplicants}[1]{\DFGSetApplicantName{#1}}
 \newcommand{\DFGSetApplicantBirthNationality}[1]{\renewcommand{\DFGApplicantBirthNationality}{#1}}
@@ -155,12 +183,12 @@
   \ifdfglegacy
     \fontsize{8.7pt}{10.4pt}\selectfont
     \makebox[\textwidth][l]{%
-      \raisebox{-3.08pt}{\makebox[\dimexpr\textwidth-4mm\relax]{\DFGFormVersion\hfill page \thepage\ of \DFGMaximumLabel\ \DFGPageMaximum}}%
+      \raisebox{-3.08pt}{\makebox[\dimexpr\textwidth-4mm\relax]{\DFGFormVersion\hfill \DFGPageWord\ \thepage\ \DFGOfWord\ \DFGMaximumLabel\ \DFGPageMaximum}}%
     }%
   \else
     \fontsize{8.5pt}{10.2pt}\selectfont
     \makebox[\textwidth][l]{%
-      \raisebox{-3.08pt}{\makebox[\dimexpr\textwidth-5mm\relax]{\DFGFormVersion\hfill page \thepage\ of \DFGMaximumLabel\ \DFGPageMaximum}}%
+      \raisebox{-3.08pt}{\makebox[\dimexpr\textwidth-5mm\relax]{\DFGFormVersion\hfill \DFGPageWord\ \thepage\ \DFGOfWord\ \DFGMaximumLabel\ \DFGPageMaximum}}%
     }%
   \fi
 }
@@ -170,8 +198,13 @@
     \begin{minipage}[b]{0.76\textwidth}
       \fontsize{8.7pt}{12pt}\selectfont
       {\color{DFGBlue}Deutsche Forschungsgemeinschaft}\par
-      Kennedyallee 40 · 53175 Bonn · postal address: 53170 Bonn\par
-      phone: + 49 228 885-1 · fax: + 49 228 885-2777 · postmaster@dfg.de · www.dfg.de
+      \ifdfggerman
+        Kennedyallee 40 · 53175 Bonn · Postanschrift: 53170 Bonn\par
+        Telefon: + 49 228 885-1 · Telefax: + 49 228 885-2777 · postmaster@dfg.de · www.dfg.de
+      \else
+        Kennedyallee 40 · 53175 Bonn · postal address: 53170 Bonn\par
+        phone: + 49 228 885-1 · fax: + 49 228 885-2777 · postmaster@dfg.de · www.dfg.de
+      \fi
     \end{minipage}%
     \hfill
     \begin{minipage}[b]{0.20\textwidth}
@@ -229,7 +262,7 @@
   {\bfseries \DFGProjectTitle\par}
   \vspace{22.7pt}
   \hrule height 0.5pt
-  {\bfseries Project Description\par}
+  {\bfseries \DFGMainMatterTitle\par}
   \endgroup
   \vspace{10pt}
 }
@@ -240,10 +273,18 @@
   \endgroup
 }
 \newcommand{\DFGMainPageLimitNotice}{%
-  \DFGPageLimitNotice{Sections 1--3 must not exceed \DFGMainPageMaximum\ pages in total.}%
+  \ifdfggerman
+    \DFGPageLimitNotice{Kapitel 1--3, insgesamt maximal \DFGMainPageMaximum\ Seiten.}%
+  \else
+    \DFGPageLimitNotice{Sections 1--3 must not exceed \DFGMainPageMaximum\ pages in total.}%
+  \fi
 }
 \newcommand{\DFGSupplementPageLimitNotice}{%
-  \DFGPageLimitNotice{Section 4 et seq. must not exceed \DFGSupplementPageMaximum\ pages.}%
+  \ifdfggerman
+    \DFGPageLimitNotice{Kapitel 4ff., insgesamt maximal \DFGSupplementPageMaximum\ Seiten.}%
+  \else
+    \DFGPageLimitNotice{Section 4 et seq. must not exceed \DFGSupplementPageMaximum\ pages.}%
+  \fi
 }
 
 \newcommand{\DFGStartSupplement}{%
@@ -331,7 +372,7 @@
     \ClassError{dfgproposal}{Unresolved template guidance remains}{Remove or replace every \string\DFGInstruction before submission.}%
   \else
     \par\begingroup\color{black!62}\small\itshape
-      [Template guidance: #1]\par
+      [\DFGGuidanceLabel: #1]\par
     \endgroup
   \fi
 }
@@ -345,10 +386,10 @@
 }
 
 \newcommand{\DFGNotApplicable}[1]{%
-  \par\noindent\textit{Not applicable.}\ifstrempty{#1}{}{ #1}\par
+  \par\noindent\textit{\ifdfggerman Nicht zutreffend.\else Not applicable.\fi}\ifstrempty{#1}{}{ #1}\par
 }
 \newcommand{\DFGNotRequested}[1]{%
-  \par\noindent\textit{Not requested.}\ifstrempty{#1}{}{ #1}\par
+  \par\noindent\textit{\ifdfggerman Nicht beantragt.\else Not requested.\fi}\ifstrempty{#1}{}{ #1}\par
 }
 \ifdfglegacy
   \newenvironment{DFGfundtable}{%
