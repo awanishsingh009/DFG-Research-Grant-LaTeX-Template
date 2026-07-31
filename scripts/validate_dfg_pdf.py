@@ -311,7 +311,13 @@ def validate_source(source: Path, language: str, allow_guidance: bool, report: R
         report.warn("an empty DFGNotApplicable reason remains")
 
 
-def validate_pdf(pdf: Path, language: str, allow_guidance: bool, report: Report) -> None:
+def validate_pdf(
+    pdf: Path,
+    language: str,
+    allow_guidance: bool,
+    allow_draft_font: bool,
+    report: Report,
+) -> None:
     if not pdf.is_file():
         report.fail(f"PDF not found: {pdf}")
         return
@@ -378,12 +384,18 @@ def validate_pdf(pdf: Path, language: str, allow_guidance: bool, report: Report)
         report.fail("no PDF fonts could be inspected")
     else:
         names = [row[0] for row in font_rows]
-        if not any("Arial" in name for name in names):
-            report.fail("Arial is not present in the PDF")
+        has_arial = any("Arial" in name for name in names)
+        has_helvetica_draft = any(
+            "Helvetica" in name or "NimbusSan" in name for name in names
+        )
+        if has_arial:
+            report.ok("Arial font")
+        elif allow_draft_font and has_helvetica_draft:
+            report.ok("Helvetica-compatible drafting font")
         elif any("Liberation" in name for name in names):
             report.fail("Liberation Sans fallback is present")
         else:
-            report.ok("Arial font")
+            report.fail("Arial is not present in the PDF")
         if any(row[3] != "yes" for row in font_rows):
             report.fail("one or more PDF fonts are not embedded")
         else:
@@ -465,11 +477,24 @@ def main() -> int:
         action="store_true",
         help="allow master-template guidance and placeholder metadata",
     )
+    parser.add_argument(
+        "--allow-draft-font",
+        action="store_true",
+        help="allow the pdfLaTeX Helvetica-compatible drafting fallback",
+    )
     args = parser.parse_args()
 
     report = Report()
     validate_source(args.source, args.language, args.allow_guidance, report)
-    validate_pdf(args.pdf, args.language, args.allow_guidance, report)
+    if args.allow_draft_font and not args.allow_guidance:
+        report.fail("draft-font allowance requires --allow-guidance")
+    validate_pdf(
+        args.pdf,
+        args.language,
+        args.allow_guidance,
+        args.allow_draft_font,
+        report,
+    )
     return report.emit()
 
 

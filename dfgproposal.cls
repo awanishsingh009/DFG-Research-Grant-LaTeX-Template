@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 % Author: Dr. Awanish Pratap Singh
-\ProvidesClass{dfgproposal}[2026/07/31 v1.1 reusable DFG project-proposal layout]
+\ProvidesClass{dfgproposal}[2026/07/31 v1.2 reusable DFG project-proposal layout]
 
 \newif\ifdfglegacy
 \newif\ifdfgsubmission
@@ -22,27 +22,37 @@
 
 \RequirePackage{iftex}
 \ifPDFTeX
-  \ClassError{dfgproposal}{Use XeLaTeX, LuaLaTeX, or Tectonic}{This class uses fontspec so that Arial can be selected exactly.}
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{helvet}
+  \renewcommand{\familydefault}{\sfdefault}
+  \newcommand{\DFGResolvedFont}{Helvetica (pdfLaTeX drafting fallback)}%
+  \ifdfgsubmission
+    \ClassError{dfgproposal}{pdfLaTeX is not permitted in submission mode}{Compile the submission copy with XeLaTeX or LuaLaTeX so that Arial can be selected and verified exactly.}%
+  \else
+    \ClassWarningNoLine{dfgproposal}{pdfLaTeX drafting mode uses Helvetica. Rebuild the final submission with XeLaTeX or LuaLaTeX and Arial}%
+  \fi
+\else
+  \RequirePackage{fontspec}
+  \IfFontExistsTF{Arial}{%
+    \setmainfont{Arial}[Ligatures=TeX]
+    \newcommand{\DFGResolvedFont}{Arial}%
+  }{%
+    \setmainfont{Liberation Sans}[Ligatures=TeX]
+    \newcommand{\DFGResolvedFont}{Liberation Sans (Arial-compatible fallback)}%
+    \ifdfgsubmission
+      \ClassError{dfgproposal}{Arial was not found in submission mode}{Install Arial and rebuild with XeLaTeX or LuaLaTeX before submission. Liberation Sans is permitted only for drafting.}%
+    \else
+      \ClassWarningNoLine{dfgproposal}{Arial was not found. Using Liberation Sans for development; install Arial before a final DFG submission}%
+    \fi
+  }
 \fi
 
-\RequirePackage{fontspec}
 \ifdfggerman
   \RequirePackage[ngerman]{babel}
 \else
   \RequirePackage[english]{babel}
 \fi
-\IfFontExistsTF{Arial}{%
-  \setmainfont{Arial}[Ligatures=TeX]
-  \newcommand{\DFGResolvedFont}{Arial}%
-}{%
-  \setmainfont{Liberation Sans}[Ligatures=TeX]
-  \newcommand{\DFGResolvedFont}{Liberation Sans (Arial-compatible fallback)}%
-  \ifdfgsubmission
-    \ClassError{dfgproposal}{Arial was not found in submission mode}{Install Arial and rebuild with XeLaTeX before submission. Liberation Sans is permitted only for drafting.}%
-  \else
-    \ClassWarningNoLine{dfgproposal}{Arial was not found. Using Liberation Sans for development; install Arial before a final DFG submission}%
-  \fi
-}
 
 \ifdfglegacy
   % Calibrated against the historical DFG000 PDF; do not change.

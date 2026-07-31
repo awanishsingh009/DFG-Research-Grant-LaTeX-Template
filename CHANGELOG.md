@@ -2,6 +2,13 @@
 
 All notable repository changes are recorded here.
 
+## 1.2.0 — 2026-07-31
+
+- Added a pdfLaTeX drafting path using a Helvetica-compatible font.
+- Kept strict submission builds limited to XeLaTeX or LuaLaTeX with Arial.
+- Added pdfLaTeX build targets and draft-font validation for both languages.
+- Documented the compiler choice for local builds and Overleaf.
+
 ## 1.1.0 — 2026-07-31
 
 - Added a complete German project-description template based on the current

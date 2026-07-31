@@ -2,6 +2,8 @@
 param(
     [ValidateSet("english", "german", "all")]
     [string]$Language = "english",
+    [ValidateSet("xelatex", "pdflatex")]
+    [string]$Engine = "xelatex",
     [string]$Source = "",
     [switch]$Strict,
     [switch]$Clean
@@ -12,6 +14,9 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 
 if ($Language -eq "all" -and $Source) {
     throw "A custom -Source can only be used with one language."
+}
+if ($Strict -and $Engine -eq "pdflatex") {
+    throw "Strict submission builds require XeLaTeX and Arial; pdfLaTeX is drafting-only."
 }
 
 $targets = switch ($Language) {
@@ -28,9 +33,9 @@ $targets = switch ($Language) {
 Push-Location $projectRoot
 
 try {
-    $xelatex = Get-Command xelatex -ErrorAction SilentlyContinue
-    if (-not $xelatex -and -not $Clean) {
-        throw "XeLaTeX was not found. Install TeX Live or MiKTeX and retry."
+    $compiler = Get-Command $Engine -ErrorAction SilentlyContinue
+    if (-not $compiler -and -not $Clean) {
+        throw "$Engine was not found. Install TeX Live or MiKTeX and retry."
     }
 
     $validator = Join-Path $PSScriptRoot "validate_dfg_pdf.py"
@@ -40,7 +45,8 @@ try {
         $targetLanguage = $target.Language
         $targetSource = $target.Source
         $sourcePath = Join-Path $projectRoot $targetSource
-        $buildDir = Join-Path $projectRoot (Join-Path "build" $targetLanguage)
+        $buildRoot = if ($Engine -eq "xelatex") { "build" } else { Join-Path "build" "pdflatex" }
+        $buildDir = Join-Path $projectRoot (Join-Path $buildRoot $targetLanguage)
 
         if (-not (Test-Path -LiteralPath $sourcePath)) {
             throw "Source file not found: $sourcePath"
@@ -55,10 +61,10 @@ try {
             continue
         }
 
-        & xelatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory="$buildDir" "$targetSource"
-        if ($LASTEXITCODE -ne 0) { throw "First XeLaTeX pass failed for $targetLanguage with exit code $LASTEXITCODE" }
-        & xelatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory="$buildDir" "$targetSource"
-        if ($LASTEXITCODE -ne 0) { throw "Second XeLaTeX pass failed for $targetLanguage with exit code $LASTEXITCODE" }
+        & $Engine -interaction=nonstopmode -halt-on-error -file-line-error -output-directory="$buildDir" "$targetSource"
+        if ($LASTEXITCODE -ne 0) { throw "First $Engine pass failed for $targetLanguage with exit code $LASTEXITCODE" }
+        & $Engine -interaction=nonstopmode -halt-on-error -file-line-error -output-directory="$buildDir" "$targetSource"
+        if ($LASTEXITCODE -ne 0) { throw "Second $Engine pass failed for $targetLanguage with exit code $LASTEXITCODE" }
 
         $pdfName = [System.IO.Path]::GetFileNameWithoutExtension($targetSource) + ".pdf"
         $pdfPath = Join-Path $buildDir $pdfName
@@ -66,13 +72,14 @@ try {
         if ($python -and (Test-Path -LiteralPath $validator)) {
             $qaArgs = @($validator, $sourcePath, $pdfPath, "--language", $targetLanguage)
             if (-not $Strict) { $qaArgs += "--allow-guidance" }
+            if ($Engine -eq "pdflatex") { $qaArgs += "--allow-draft-font" }
             & python @qaArgs
             if ($LASTEXITCODE -ne 0) { throw "DFG QA failed for $targetLanguage with exit code $LASTEXITCODE" }
         } else {
             Write-Warning "Python validator was not run. Install Python 3 for automated QA."
         }
 
-        Write-Host "Built $targetLanguage template: $pdfPath"
+        Write-Host "Built $targetLanguage template with ${Engine}: $pdfPath"
     }
 
     if ($Language -eq "all" -and $python) {
