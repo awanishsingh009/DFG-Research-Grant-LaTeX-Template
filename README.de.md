@@ -35,7 +35,7 @@ Prüfen Sie am Tag der Einreichung erneut die
 - offizieller Überschriftenwortlaut in beiden Sprachen;
 - Entwurfs- und strenger Einreichungsmodus;
 - getrennte 17-Seiten- und 8-Seiten-Logik;
-- Arial-Prüfung für die Einreichungsfassung;
+- Arial-Prüfung für die Einreichungsfassung mit pdfLaTeX-/Helvetica-Entwurfsmodus;
 - DFG-ähnliche Überschriften, Seitenköpfe und Fußzeilen;
 - wiederverwendbare Hilfen für Tabellen, Abbildungen und nicht zutreffende Angaben;
 - automatisierte Quelltext- und PDF-Prüfungen;
@@ -46,7 +46,8 @@ Prüfen Sie am Tag der Einreichung erneut die
 
 Voraussetzungen:
 
-- XeLaTeX aus MiKTeX oder TeX Live;
+- XeLaTeX aus MiKTeX oder TeX Live für Einreichungsfassungen;
+- optional pdfLaTeX für Entwürfe mit Helvetica;
 - Arial für die strenge Einreichungsfassung;
 - Python 3;
 - Poppler-Befehle `pdfinfo`, `pdffonts` und `pdftotext`.
@@ -74,8 +75,20 @@ Beide Fassungen erstellen:
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
 ```
 
-Mit `make` stehen `make german`, `make english` und `make bilingual` zur
-Verfügung.
+Wenn XeLaTeX oder Arial nicht verfügbar ist, kann eine portable
+Entwurfsfassung mit pdfLaTeX und einer Helvetica-kompatiblen Schrift erstellt
+werden. Dieser Modus ist für strenge Einreichungs-Builds gesperrt:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all -Engine pdflatex
+```
+
+In Overleaf kompiliert pdfLaTeX die `guidance`-Vorlagen mit Helvetica. Vor der
+Einreichung muss wieder XeLaTeX zusammen mit der Klassenoption `submission`
+verwendet werden, damit Arial verbindlich geprüft wird.
+
+Mit `make` stehen `make german`, `make english`, `make bilingual` und
+`make pdflatex-draft` zur Verfügung.
 
 Die PDFs werden geschrieben nach:
 
@@ -131,7 +144,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\download_official_sources.ps1
 
 Für die Zitation stehen die Metadaten in `CITATION.cff` zur Verfügung:
 
-> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.1.0).
+> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.2.0).
 
 ## Lizenz und Kennzeichen
 

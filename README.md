@@ -36,7 +36,7 @@ on the submission date.
 - automatic structural parity checking between both templates;
 - drafting and strict submission modes;
 - 17-page and 8-page logical page-limit handling;
-- Arial release-mode enforcement;
+- Arial release-mode enforcement with a pdfLaTeX/Helvetica drafting fallback;
 - DFG-style headings, page headers and footer treatment;
 - reusable table, figure and not-applicable helpers;
 - automated source and PDF preflight checks;
@@ -47,7 +47,8 @@ on the submission date.
 
 Requirements:
 
-- XeLaTeX from MiKTeX or TeX Live;
+- XeLaTeX from MiKTeX or TeX Live for release builds;
+- optional pdfLaTeX for Helvetica-based drafting copies;
 - Arial for the strict release build;
 - Python 3;
 - Poppler commands `pdfinfo`, `pdffonts` and `pdftotext`.
@@ -75,7 +76,20 @@ Build and validate both:
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
 ```
 
-On systems with `make`, use `make english`, `make german` or `make bilingual`.
+For a portable drafting copy when XeLaTeX or Arial is unavailable, use
+pdfLaTeX and its Helvetica-compatible font. This mode is deliberately blocked
+for strict submission builds:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all -Engine pdflatex
+```
+
+On Overleaf, selecting pdfLaTeX compiles the `guidance` templates with
+Helvetica. Before submission, switch the compiler back to XeLaTeX and use the
+`submission` class option so the class can require Arial.
+
+On systems with `make`, use `make english`, `make german`, `make bilingual` or
+`make pdflatex-draft`.
 
 The PDFs are written to:
 
@@ -149,7 +163,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\download_official_sources.ps1
 If this template supports a proposal, cite the repository metadata in
 `CITATION.cff`:
 
-> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.1.0).
+> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.2.0).
 
 ## License and trademarks
 
