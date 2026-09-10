@@ -1,160 +1,58 @@
 # LaTeX-Vorlage für DFG-Sachbeihilfeanträge
 
-[English](README.md) | [Deutsch](README.de.md)
+[English](README.md) · [Deutsch](README.de.md)
 
-Eine wiederverwendbare zweisprachige LaTeX-Vorlage für deutsch- oder
-englischsprachige Beschreibungen von DFG-Sachbeihilfevorhaben, gepflegt von
-**Dr. Awanish Pratap Singh**.
+Kurzes Hauptdokument, getrennte Kapiteldateien, funktionierende Literaturangaben
+und nachvollziehbare Prüfungen. Gepflegt von **Dr. Awanish Pratap Singh**.
+Unabhängige, inoffizielle Vorlage unter MIT-Lizenz.
 
-Das Repository enthält zwei getrennt nutzbare, einsprachige
-Antragsvorlagen. Formatierung, Seitenlogik, Prüfroutinen und Dokumentation
-werden gemeinsam gepflegt.
+**Quellenstand:** Vordrucke 53.01 und 54.01 [09/26], geprüft am 10. September 2026.
+Andere Förderprogramme benötigen gesondert geprüfte Vorlagen.
 
-> [!IMPORTANT]
-> Dies ist eine unabhängige, inoffizielle Vorlage. Sie wird nicht von der
-> Deutschen Forschungsgemeinschaft (DFG) veröffentlicht, bestätigt oder
-> gepflegt. Maßgeblich sind immer die aktuellen DFG-Vordrucke, die
-> elan-Vorlage und die Programminformationen.
+## Einstieg
 
-## Aktueller Stand
+1. Ein deutschsprachiges Starter-ZIP verwenden oder das Repository herunterladen.
+2. Im zweisprachigen Repository metadata-de.tex bearbeiten.
+3. Den eigenen Text in sections/de/ schreiben.
+4. Literatur in bibliography/references.bib ergänzen.
+5. Kompilieren.
 
-Das Repository wurde am 31. Juli 2026 geprüft gegen:
+**Overleaf:** ZIP hochladen, XeLaTeX auswählen und main-de.tex als Hauptdokument
+festlegen. Im einsprachigen Starter heißt die Hauptdatei main.tex.
+Python ist zum Kompilieren auf Overleaf nicht erforderlich.
 
-- DFG-Vordruck 54.01, deutscher und englischer Leitfaden `[06/26]`
-- DFG-Vordruck 53.01 elan, deutsche und englische Vorlage `[09/25]`
-- Programm- und Modulmerkblätter in
-  [`docs/OFFICIAL_DFG_SOURCES.md`](docs/OFFICIAL_DFG_SOURCES.md)
+**Lokal:** TeX-Distribution mit XeLaTeX und Biber sowie Python 3.10+ installieren.
+Der Python-Build benötigt weder pip-Pakete noch Perl.
 
-Prüfen Sie am Tag der Einreichung erneut die
-[offizielle Seite der DFG-Formulare und Merkblätter](https://www.dfg.de/de/foerderung/foerdermoeglichkeiten/programme/einzelfoerderung/antragspakete/formulare-merkblaetter).
+    python scripts/doctor.py
+    python scripts/build.py --language german
 
-## Eigenschaften
+Unter macOS/Linux gegebenenfalls python3 verwenden. Für die PDF-Prüfungen
+wird zusätzlich Poppler benötigt. Fehlende optionale Werkzeuge werden im Entwurf
+als nicht geprüft angezeigt; bei Einreichungsprüfungen führen sie zum Abbruch.
+[Installation](docs/SETUP.md) · [Overleaf](docs/OVERLEAF.md)
 
-- vollständige aktuelle Gliederung der Beschreibung des Vorhabens;
-- getrennte deutsche und englische Vorlagen;
-- offizieller Überschriftenwortlaut in beiden Sprachen;
-- Entwurfs- und strenger Einreichungsmodus;
-- getrennte 17-Seiten- und 8-Seiten-Logik;
-- Arial-Prüfung für die Einreichungsfassung mit pdfLaTeX-/Helvetica-Entwurfsmodus;
-- DFG-ähnliche Überschriften, Seitenköpfe und Fußzeilen;
-- wiederverwendbare Hilfen für Tabellen, Abbildungen und nicht zutreffende Angaben;
-- automatisierte Quelltext- und PDF-Prüfungen;
-- Build-Befehle für PowerShell und `make`;
-- offizielles Quellenregister ohne Weiterverteilung fremder Dokumente.
+## Beispiel und Einreichungsfassung
 
-## Schnellstart
+    python scripts/build.py --source example-de.tex --language german
 
-Voraussetzungen:
+Das fiktive Beispiel zeigt mehrere Antragstellende, Literatur, Querverweise,
+Gleichungen, Abbildungen und Tabellen. Es ist kein Forschungsantrag.
 
-- XeLaTeX aus MiKTeX oder TeX Live für Einreichungsfassungen;
-- optional pdfLaTeX für Entwürfe mit Helvetica;
-- Arial für die strenge Einreichungsfassung;
-- Python 3;
-- Poppler-Befehle `pdfinfo`, `pdffonts` und `pdftotext`.
+Ersetzen Sie alle Schreibhinweise und Platzhalter. Treffen Sie nach fachlicher
+Prüfung die Auswahl zur Erforderlichkeit einer Ethikstellungnahme.
 
-Vorlagendateien:
+    python scripts/build.py --language german --release
 
-- `main.tex`: Englisch
-- `main-de.tex`: Deutsch
+Der Schalter wählt den Einreichungsmodus automatisch. Arial, vollständige
+Kompilation, korrekte Literaturverweise, Kapitelstruktur und PDF-Prüfungen
+werden verlangt. Ergebnisse liegen unter build/release/german/xelatex/.
+Der Bericht .checks.json dokumentiert die einzelnen Prüfungen.
 
-Deutschen Entwurf erstellen:
+**Automatische Formatprüfungen ersetzen keine wissenschaftliche oder
+administrative Prüfung.** Kontrollieren Sie die PDF visuell und verwenden Sie
+die [Checkliste](CURRENT_DFG_COMPLIANCE_CHECKLIST.de.md).
+Prüfen Sie vor der Einreichung die aktuellen offiziellen DFG-Unterlagen.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language german
-```
-
-Englischen Entwurf erstellen:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language english
-```
-
-Beide Fassungen erstellen:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
-```
-
-Wenn XeLaTeX oder Arial nicht verfügbar ist, kann eine portable
-Entwurfsfassung mit pdfLaTeX und einer Helvetica-kompatiblen Schrift erstellt
-werden. Dieser Modus ist für strenge Einreichungs-Builds gesperrt:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all -Engine pdflatex
-```
-
-In Overleaf kompiliert pdfLaTeX die `guidance`-Vorlagen mit Helvetica. Vor der
-Einreichung muss wieder XeLaTeX zusammen mit der Klassenoption `submission`
-verwendet werden, damit Arial verbindlich geprüft wird.
-
-Mit `make` stehen `make german`, `make english`, `make bilingual` und
-`make pdflatex-draft` zur Verfügung.
-
-Die PDFs werden geschrieben nach:
-
-- `build/german/main-de.pdf`
-- `build/english/main.pdf`
-
-## Einreichungsmodus
-
-Entfernen Sie vor der Einreichung alle Vorlagenhinweise und Platzhalter.
-Ändern Sie in `main-de.tex`:
-
-```tex
-\documentclass[current,guidance,german]{dfgproposal}
-```
-
-zu:
-
-```tex
-\documentclass[current,submission,german]{dfgproposal}
-```
-
-Danach:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language german -Strict
-```
-
-oder:
-
-```bash
-make german-strict
-```
-
-Arbeiten Sie zusätzlich
-`CURRENT_DFG_COMPLIANCE_CHECKLIST.de.md` vollständig ab und prüfen Sie jede
-PDF-Seite visuell.
-
-Ein einzureichendes PDF soll durchgehend eine Sprache verwenden. Das
-Repository ist zweisprachig; die einzelne Beschreibung des Vorhabens ist es
-nicht.
-
-## Offizielle Dokumente
-
-DFG-Dokumente werden nicht im Repository gespeichert. Das Quellenregister
-enthält deutsche und englische Links. Eine lokale, von Git ignorierte Kopie
-kann mit folgendem Befehl erstellt werden:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\download_official_sources.ps1
-```
-
-## Zitation
-
-Für die Zitation stehen die Metadaten in `CITATION.cff` zur Verfügung:
-
-> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.2.0).
-
-## Lizenz und Kennzeichen
-
-Der eigenständige Vorlagencode und die Dokumentation stehen unter der
-MIT-Lizenz. Namen, Vordrucke, Gestaltungselemente und verlinkte Dokumente der
-DFG verbleiben bei den jeweiligen Rechteinhabern und sind nicht Bestandteil
-dieser Lizenz.
-
-## Autor und Maintainer
-
-**Dr. Awanish Pratap Singh**
-
-[GitHub-Profil](https://github.com/awanishsingh009)
+[Anwendung](docs/AUTHORING.md) · [Migration von Version 1](docs/MIGRATION.md) ·
+[Quellen](docs/OFFICIAL_DFG_SOURCES.md) · [Mitwirken](CONTRIBUTING.md)

@@ -1,6 +1,11 @@
 # LaTeX build products
 build/
 tmp/
+dist/
+*.dfg-audit
+*.inputs.json
+*.checks.json
+/*.pdf
 *.aux
 *.bbl
 *.bcf

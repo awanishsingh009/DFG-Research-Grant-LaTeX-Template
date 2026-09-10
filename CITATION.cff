@@ -6,8 +6,7 @@ authors:
   - family-names: "Singh"
     given-names: "Awanish Pratap"
     alias: "Dr. Awanish Pratap Singh"
-version: 1.2.0
-date-released: 2026-07-31
+version: 2.0.0
 repository-code: "https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template"
 url: "https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template"
 license: MIT

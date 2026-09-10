@@ -1,0 +1,33 @@
+name: Portable template checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  portable:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install portable TeX and PDF dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-luatex texlive-latex-extra texlive-fonts-recommended texlive-lang-german biber poppler-utils
+      - name: Check generated profile
+        run: python scripts/generate_profile.py --check
+      - name: Unit and compiler regressions
+        env:
+          DFG_RUN_TEX_TESTS: '1'
+        run: python -m unittest discover -s tests -v
+      - name: Build both languages with portable fonts
+        run: |
+          python scripts/build.py --language all --portable
+          python scripts/build.py --language all --engine pdflatex
+          python scripts/build.py --source example.tex --portable
+          python scripts/build.py --source example-de.tex --language german --portable
+      # Arial release typography is verified separately in an Arial-capable environment.
