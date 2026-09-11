@@ -1,81 +1,26 @@
-# GitHub publishing checklist
+# Preparing a release
 
-**Repository owner and maintainer:** Dr. Awanish Pratap Singh
+This process prepares reviewable local artifacts before publication.
 
-## Before the first push
+1. Recheck the current official DFG forms and update the profile if necessary.
+2. Run profile, unit and compiler integration tests.
+3. Build the English and German starters and completed fictional examples.
+4. Run strict checks on both examples in an Arial-capable environment.
+5. Render and inspect every released preview page.
+6. Build the language-specific ZIPs:
 
-- [ ] Use the repository name `DFG-Research-Grant-LaTeX-Template`.
-- [ ] Create an empty repository without an additional README, license or
-      ignore file.
-- [ ] Confirm the local default branch is `main`.
-- [ ] Confirm the local author and committer identity:
+       python scripts/package_starters.py
 
-  ```bash
-  git var GIT_AUTHOR_IDENT
-  git var GIT_COMMITTER_IDENT
-  ```
+7. Extract both ZIPs into clean directories and compile them independently.
+8. Inspect ZIP contents: no personal proposals, fonts, official documents,
+   test artifacts, Git metadata or machine-specific input manifests.
+9. Record actual platform/compiler versions and any untested environments.
+10. Review the diff, migration guide, changelog, author metadata and license.
 
-- [ ] Confirm the working tree is clean:
+After the release has been reviewed, publishing can include enabling GitHub's
+template-repository setting, creating the version tag and uploading starter ZIPs
+and example PDFs as release assets. These are external actions; the packaging
+script performs none of them.
 
-  ```bash
-  git status --short --branch
-  ```
-
-- [ ] Confirm no generated or third-party document files are tracked:
-
-  ```bash
-  git ls-files "*.pdf" "*.rtf" "*.log" "*.aux" "*.synctex.gz"
-  ```
-
-- [ ] Inspect all tracked files:
-
-  ```bash
-  git ls-files
-  ```
-
-- [ ] Build and validate both language templates:
-
-  ```powershell
-  powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
-  ```
-
-## Recommended repository information
-
-- Description: `Unofficial reusable LaTeX template for DFG Research Grant project descriptions.`
-- Topics: `latex`, `dfg`, `research-proposal`, `grant-writing`,
-  `scientific-writing`
-- Default branch: `main`
-- License: `MIT`
-
-## Push commands
-
-After creating the empty repository:
-
-```bash
-git remote add origin https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template.git
-git remote -v
-git push -u origin main
-```
-
-Review the remote URL before pushing.
-
-## After the first push
-
-- [ ] Confirm GitHub displays the README and MIT license.
-- [ ] Confirm GitHub recognises `CITATION.cff`.
-- [ ] Confirm the author is shown as Dr. Awanish Pratap Singh.
-- [ ] Open every relative documentation link.
-- [ ] Confirm no proposal data or local paths appear in repository search.
-- [ ] Create release `v1.0.0` from the verified commit if a release is wanted.
-
-## Before every future release
-
-- [ ] Recheck the live DFG forms page.
-- [ ] Update `guideline-versions.tex`, the source register and changelog.
-- [ ] Compile both languages in guidance mode and run automated QA.
-- [ ] Compile a strict example separately when suitable test content is
-      available.
-- [ ] Inspect every rendered page.
-- [ ] Run credential and private-data scans.
-- [ ] Review the full commit diff and commit identities.
-- [ ] Tag only a clean, verified commit.
+An Overleaf verification claim requires an actual import/build there and the
+tested TeX Live version. Local ZIP tests alone are insufficient.

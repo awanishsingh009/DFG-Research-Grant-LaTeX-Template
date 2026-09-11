@@ -1,20 +1,30 @@
 # Contributing
 
-The repository is maintained by **Dr. Awanish Pratap Singh**.
+Maintainer: Dr. Awanish Pratap Singh.
 
-Contributions should improve accuracy, portability, accessibility or
-documentation without introducing project-specific proposal material.
+Use fictional examples, not real proposal material. Preserve original author
+attribution. Changes are contributed under the MIT license.
 
-Before opening a pull request:
+For a change:
 
-1. compare structural changes with the current official DFG sources;
-2. build both `main.tex` and `main-de.tex` successfully with XeLaTeX;
-3. run `scripts/build.ps1 -Language all` or the equivalent `make bilingual`;
-4. inspect the compiled PDF visually;
-5. keep third-party DFG documents, proposal data and generated files out of the
-   commit;
-6. preserve structural parity between the English and German templates;
-7. explain the reason and official source for any compliance-related change.
+1. Explain the user-facing problem.
+2. Ground form changes in the current official sources.
+3. Update the profile and generated file together.
+4. Run unit tests, builds and relevant integration tests.
+5. Inspect both example PDFs visually.
+6. Include a migration note when changing author-facing behavior.
 
-By submitting a contribution, you agree that it may be distributed under the
-MIT License.
+    python scripts/generate_profile.py --check
+    python -m unittest discover -s tests -v
+    python scripts/build.py --language all
+    python scripts/build.py --source example.tex --release
+    python scripts/build.py --source example-de.tex --language german --release
+
+Set DFG_RUN_TEX_TESTS=1 to include the compiler integration tests. Those tests
+use a portable draft font unless they explicitly exercise a submission error,
+so the portable CI job does not claim to verify Arial release typography.
+Test artifacts are confined to build/.
+
+The generated profile is checked in; users do not need Python to regenerate
+anything for editor or Overleaf compilation. Source and PDF checks are separate
+from scientific or administrative approval.

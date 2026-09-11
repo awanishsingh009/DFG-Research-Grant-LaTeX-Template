@@ -1,0 +1,15 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dfg-bibliography}[2026/09/10 v2.0 DFG bibliography helpers]
+\RequirePackage[backend=biber,style=numeric,sorting=none,giveninits=true,maxbibnames=99,doi=true,url=true,isbn=false]{biblatex}
+\DeclareBibliographyCategory{dfghighlight}
+\def\dfghighlightkeys{}
+\newcount\dfghighlightcount
+\newcommand{\DFGHighlightOne}[1]{%
+  \ifinlist{#1}{\dfghighlightkeys}{}{%
+    \listadd\dfghighlightkeys{#1}\advance\dfghighlightcount by 1
+    \ifnum\dfghighlightcount>10\PackageError{dfg-bibliography}{More than ten applicant works highlighted}{Select at most ten works across all applicants.}\fi
+    \addtocategory{dfghighlight}{#1}%
+  }%
+}
+\newcommand{\DFGHighlightPublications}[1]{\forcsvlist{\DFGHighlightOne}{#1}}
+\AtEveryBibitem{\ifcategory{dfghighlight}{\bfseries}{}}

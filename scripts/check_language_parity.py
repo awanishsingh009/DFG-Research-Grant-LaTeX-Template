@@ -1,44 +1,19 @@
-#!/usr/bin/env python3
-"""Verify that English and German templates use the same numbered structure."""
-
-from __future__ import annotations
-
-import re
-import sys
+"""Check effective bilingual structure using completed compilation traces."""
 from pathlib import Path
+import argparse
+import json
+from checks import ROOT, Report, check_trace
 
-__author__ = "Dr. Awanish Pratap Singh"
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('english',type=Path,help='English .dfg-audit trace')
+    p.add_argument('german',type=Path,help='German .dfg-audit trace')
+    args=p.parse_args()
+    profile=json.loads((ROOT/'profiles/research-grants-2026-09.json').read_text(encoding='utf-8'))
+    report=Report()
+    for lang,path in [('english',args.english),('german',args.german)]:
+        try: check_trace(path.read_text(encoding='utf-8'),profile,lang,False,report)
+        except OSError as exc: report.add(lang+' trace','failed',str(exc))
+    return report.emit()
 
-HEADING_PATTERN = re.compile(
-    r"\\DFG(?:Stacked)?(?:DeepSubsubsection|Subsubsection|Subsection|Section)"
-    r"\{([^}]+)\}\{"
-)
-
-
-def heading_numbers(path: Path) -> list[str]:
-    text = path.read_text(encoding="utf-8")
-    return HEADING_PATTERN.findall(text)
-
-
-def main() -> int:
-    if len(sys.argv) != 3:
-        print("usage: check_language_parity.py ENGLISH.tex GERMAN.tex")
-        return 2
-
-    english = Path(sys.argv[1])
-    german = Path(sys.argv[2])
-    english_numbers = heading_numbers(english)
-    german_numbers = heading_numbers(german)
-
-    if english_numbers != german_numbers:
-        print("Language parity check failed.")
-        print(f"English sequence: {english_numbers}")
-        print(f"German sequence:  {german_numbers}")
-        return 1
-
-    print(f"Language parity: OK ({len(english_numbers)} numbered headings)")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+if __name__=='__main__': raise SystemExit(main())

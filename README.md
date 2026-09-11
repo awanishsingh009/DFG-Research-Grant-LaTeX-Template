@@ -1,179 +1,110 @@
 # DFG Research Grant LaTeX Template
 
-[English](README.md) | [Deutsch](README.de.md)
+[English](README.md) · [Deutsch](README.de.md)
 
-A reusable bilingual English/German LaTeX template for DFG Research Grant
-project descriptions,
-maintained by **Dr. Awanish Pratap Singh**.
+Write a DFG Research Grants project description with a short main document,
+separate research sections, working citations and clear build checks.
+Maintained by **Dr. Awanish Pratap Singh**. Unofficial; MIT licensed.
 
-The package reproduces the practical typography and section hierarchy needed
-for a DFG-style project description while keeping the source editable,
-version-controlled and suitable for collaborative scientific writing.
+**Form profile:** 53.01 and 54.01, September 2026. Sources checked 10 September 2026.
+Supports Research Grants (Sachbeihilfe). Other programmes require their own verified templates.
 
-> [!IMPORTANT]
-> This is an independent, unofficial template. It is not published, endorsed
-> or maintained by the Deutsche Forschungsgemeinschaft (DFG). The current DFG
-> forms, elan template and programme instructions always take precedence.
+## Start writing
 
-## Current baseline
+1. Download the [English starter](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/download/v2.0.0/dfg-starter-en.zip) or [German starter](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/download/v2.0.0/dfg-starter-de.zip), or use this repository as a GitHub template.
+2. Edit [metadata.tex](metadata.tex) (English) or [metadata-de.tex](metadata-de.tex) (German).
+3. Write in [sections/en](sections/en) or [sections/de](sections/de).
+4. Add your literature to [bibliography/references.bib](bibliography/references.bib).
+5. Compile.
 
-The repository was checked on 31 July 2026 against:
+On **Overleaf**, upload the project ZIP, choose XeLaTeX, and set the main document
+to main.tex or main-de.tex. No Python is required for Overleaf compilation.
+The local Python/PDF checks do not run automatically on Overleaf.
+[Overleaf instructions](docs/OVERLEAF.md).
 
-- DFG form 54.01, German and English proposal instructions `[06/26]`
-- DFG form 53.01 elan, German and English project-description templates `[09/25]`
-- Research Grant programme and module documents listed in
-  [`docs/OFFICIAL_DFG_SOURCES.md`](docs/OFFICIAL_DFG_SOURCES.md)
+On **your computer**, install a TeX distribution with XeLaTeX and Biber, plus
+Python 3.10 or newer. No pip packages or Perl are needed by the supplied builder.
 
-Always recheck the
-[official Research Grant forms page](https://www.dfg.de/en/research-funding/funding-opportunities/programmes/individual/research-grants/forms-guidelines)
-on the submission date.
+    python scripts/doctor.py
+    python scripts/build.py
 
-## Features
+For German, in the bilingual repository:
 
-- complete current project-description section structure;
-- independently usable English and German proposal templates;
-- official headings preserved in each language;
-- automatic structural parity checking between both templates;
-- drafting and strict submission modes;
-- 17-page and 8-page logical page-limit handling;
-- Arial release-mode enforcement with a pdfLaTeX/Helvetica drafting fallback;
-- DFG-style headings, page headers and footer treatment;
-- reusable table, figure and not-applicable helpers;
-- automated source and PDF preflight checks;
-- Windows PowerShell and portable Makefile build commands;
-- official-source register without redistributed third-party documents.
+    python scripts/build.py --language german
 
-## Quick start
+On macOS/Linux use python3 if python is unavailable. PDF inspection additionally
+uses Poppler. Missing optional inspection tools are reported as “not checked”
+in a draft; they block a release build. [Installation and troubleshooting](docs/SETUP.md).
 
-Requirements:
+## Learn from a working example
 
-- XeLaTeX from MiKTeX or TeX Live for release builds;
-- optional pdfLaTeX for Helvetica-based drafting copies;
-- Arial for the strict release build;
-- Python 3;
-- Poppler commands `pdfinfo`, `pdffonts` and `pdftotext`.
+Compile [example.tex](example.tex) or [example-de.tex](example-de.tex):
 
-Clone the repository and choose one monolingual proposal source:
+    python scripts/build.py --source example.tex
+    python scripts/build.py --source example-de.tex --language german
 
-- `main.tex`: English
-- `main-de.tex`: German
+The fictional examples demonstrate multiple applicants, citations, numbered
+cross-references, an equation, a figure, a schedule and a funding table. They
+are formatting demonstrations, not research proposals or approved declarations.
+[Preview PDFs and starter ZIPs are available in the v2.0.0 release](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/tag/v2.0.0).
+You can also prepare them locally with the packaging command below.
 
-Edit the metadata and guidance blocks, then build the English drafting copy:
+## Prepare a submission copy
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language english
-```
+Replace all writing prompts and placeholder metadata. Assess and complete the
+ethics-statement choice in the research-context section. Then run:
 
-Build the German drafting copy:
+    python scripts/build.py --release
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language german
-```
+This selects submission mode without editing your source and requires Arial,
+a complete build, resolved citations/references, the current profile's effective
+heading sequence, the 17/8 page limits and the PDF inspection tools.
 
-Build and validate both:
+Draft: build/draft/english/xelatex/main.pdf
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all
-```
+Submission: build/release/english/xelatex/main.pdf
 
-For a portable drafting copy when XeLaTeX or Arial is unavailable, use
-pdfLaTeX and its Helvetica-compatible font. This mode is deliberately blocked
-for strict submission builds:
+The adjacent .checks.json file lists each check, warnings and items not checked.
+The PDF and input hashes identify the checked build. **Formatting checks do not
+assess scientific content, ethics approvals, eligibility or all figure labels.**
+Review the final PDF and the [submission checklist](CURRENT_DFG_COMPLIANCE_CHECKLIST.md).
+Recheck the [official DFG forms](https://www.dfg.de/en/research-funding/funding-opportunities/programmes/individual/research-grants/forms-guidelines)
+before submitting.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language all -Engine pdflatex
-```
+## Useful commands
 
-On Overleaf, selecting pdfLaTeX compiles the `guidance` templates with
-Helvetica. Before submission, switch the compiler back to XeLaTeX and use the
-`submission` class option so the class can require Arial.
+    python scripts/build.py --language all
+    python scripts/build.py --engine pdflatex
+    python scripts/build.py --portable
+    python scripts/build.py --engine lualatex --release
+    powershell -File scripts/build.ps1 -Language german -Strict
 
-On systems with `make`, use `make english`, `make german`, `make bilingual` or
-`make pdflatex-draft`.
+pdfLaTeX and portable fonts are for drafting. The builder runs Biber when needed
+and repeats TeX until references settle. latexmk is optional; its configuration
+is included for editors and Overleaf. On MiKTeX it needs Perl.
 
-The PDFs are written to:
+## Documentation
 
-- `build/english/main.pdf`
-- `build/german/main-de.pdf`
+- [Authoring: applicants, references, figures and modules](docs/AUTHORING.md)
+- [Setup and troubleshooting](docs/SETUP.md)
+- [Overleaf](docs/OVERLEAF.md)
+- [Upgrade from version 1](docs/MIGRATION.md)
+- [Official sources and verified profile](docs/OFFICIAL_DFG_SOURCES.md)
+- [Contributing and tests](CONTRIBUTING.md)
+- [What has been tested](docs/VALIDATION.md)
+- [Preparing release assets](docs/PUBLISHING_CHECKLIST.md)
 
-Before submission, remove all instructions and placeholders. For English,
-change:
+To create local language-specific starter packages and example PDFs:
 
-```tex
-\documentclass[current,guidance,english]{dfgproposal}
-```
+    python scripts/package_starters.py
 
-to:
+The output is in dist/. Packaging builds and checks the shipped examples; it
+does not publish anything or modify GitHub settings.
 
-```tex
-\documentclass[current,submission,english]{dfgproposal}
-```
+## License and citation
 
-For German, change `guidance` to `submission` while retaining the `german`
-option. Then run the appropriate strict build:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language english -Strict
-powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1 -Language german -Strict
-```
-
-With `make`:
-
-```bash
-make english-strict
-make german-strict
-```
-
-Complete the matching English or German compliance checklist and visually
-inspect every page. A submitted project description should use one language;
-the repository itself is bilingual, not the individual proposal PDF.
-
-For repository publication and release checks, follow
-[`docs/PUBLISHING_CHECKLIST.md`](docs/PUBLISHING_CHECKLIST.md).
-
-## Repository structure
-
-```text
-.
-|-- main.tex
-|-- main-de.tex
-|-- dfgproposal.cls
-|-- guideline-versions.tex
-|-- CURRENT_DFG_COMPLIANCE_CHECKLIST.md
-|-- CURRENT_DFG_COMPLIANCE_CHECKLIST.de.md
-|-- README.de.md
-|-- bibliography/
-|-- figures/
-|-- docs/
-|-- scripts/
-|-- CITATION.cff
-`-- LICENSE
-```
-
-Third-party DFG files are not stored in the repository. The source register
-provides official links, and the download helper can create an ignored local
-snapshot:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\download_official_sources.ps1
-```
-
-## Citation
-
-If this template supports a proposal, cite the repository metadata in
-`CITATION.cff`:
-
-> Singh, A. P. (2026). *DFG Research Grant LaTeX Template* (Version 1.2.0).
-
-## License and trademarks
-
-The original template code and documentation are released under the MIT
-License. DFG names, forms, branding and linked documents remain the property of
-their respective rights holders and are not covered by this repository's
-license.
-
-## Author and maintainer
-
-**Dr. Awanish Pratap Singh**
-
-[GitHub profile](https://github.com/awanishsingh009)
+Original code and documentation: [MIT License](LICENSE).
+DFG names, official forms and linked documents retain their respective rights.
+No proprietary font files or official DFG documents are distributed.
+Repository citation metadata is provided in [CITATION.cff](CITATION.cff);
+citing the template in your actual proposal is optional.

@@ -1,0 +1,18 @@
+% !TeX program = xelatex
+% Start here. Local release: python scripts/build.py --language english --release
+% On Overleaf, replace draft with submission when your text is complete.
+\documentclass[english,draft]{dfgproposal}
+\input{examples/metadata.tex}
+\addbibresource{bibliography/references.bib}
+
+\begin{document}
+\DFGStartMainMatter
+\DFGMakeProposalHeader
+\DFGMainPageLimitNotice
+\input{examples/en/01-starting-point}
+\input{examples/en/02-objectives-and-work}
+\DFGPrintReferences
+\DFGStartSupplement
+\input{examples/en/04-research-context}
+\input{examples/en/05-requested-funds}
+\end{document}

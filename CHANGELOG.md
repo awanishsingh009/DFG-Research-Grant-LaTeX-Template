@@ -2,6 +2,17 @@
 
 All notable repository changes are recorded here.
 
+## 2.0.0 — 2026-09-11
+
+- Updated to the September 2026 form structure, including ethics and science communication.
+- Added a shared bilingual profile, generated headings and real section references.
+- Split author metadata and research sections into small editable files.
+- Added working BibLaTeX/Biber integration and multi-applicant examples.
+- Unified local builds in a Python standard-library script with dependency and convergence checks.
+- Added effective-structure traces, shipped-page accounting and source/PDF freshness reports.
+- Added setup diagnostics, portable drafts, submission checks and migration instructions.
+- Added regression tests, continuous integration and local starter packaging.
+
 ## 1.2.0 — 2026-07-31
 
 - Added a pdfLaTeX drafting path using a Helvetica-compatible font.
