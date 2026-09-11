@@ -4,7 +4,7 @@
 
 Write a DFG Research Grants project description with a short main document,
 separate research sections, working citations and clear build checks.
-Maintained by **Dr. Awanish Pratap Singh**. Unofficial; MIT licensed.
+Created and maintained by **Dr. Awanish Pratap Singh** ([awanishsingh009](https://github.com/awanishsingh009)). Unofficial; MIT licensed.
 
 **Form profile:** 53.01 and 54.01, September 2026. Sources checked 10 September 2026.
 Supports Research Grants (Sachbeihilfe). Other programmes require their own verified templates.
