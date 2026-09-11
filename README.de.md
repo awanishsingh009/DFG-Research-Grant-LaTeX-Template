@@ -11,7 +11,7 @@ Andere Förderprogramme benötigen gesondert geprüfte Vorlagen.
 
 ## Einstieg
 
-1. Ein deutschsprachiges Starter-ZIP verwenden oder das Repository herunterladen.
+1. Das [deutsche Starter-ZIP herunterladen](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/download/v2.0.0/dfg-starter-de.zip) oder das Repository als GitHub-Vorlage verwenden.
 2. Im zweisprachigen Repository metadata-de.tex bearbeiten.
 3. Den eigenen Text in sections/de/ schreiben.
 4. Literatur in bibliography/references.bib ergänzen.

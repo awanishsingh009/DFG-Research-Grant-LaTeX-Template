@@ -1,6 +1,6 @@
 # Local verification — 10 September 2026
 
-Version 2.0.0 is prepared locally and has not been published by this change.
+This record covers the local verification performed before publication of v2.0.0.
 The verified form profile is Research Grants 53.01 / 54.01, September 2026.
 See [the source record](OFFICIAL_DFG_SOURCES.md) for official links and hashes.
 
@@ -52,8 +52,8 @@ run without Perl; the Python builder ran TeX and Biber directly.
 
 ## Verification limits
 
-The GitHub Actions workflow has been added but has not run remotely.
-No macOS, Linux or Overleaf cloud result is claimed by this local verification.
+Remote workflow results are available in [GitHub Actions](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/actions/workflows/build.yml).
+No macOS, Linux or Overleaf cloud result is claimed by this local verification record.
 Arial submission typography requires a separate Arial-capable environment
 when the portable CI job is used.
 

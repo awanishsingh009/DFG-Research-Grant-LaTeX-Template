@@ -2,7 +2,7 @@
 
 All notable repository changes are recorded here.
 
-## Unreleased — 2.0.0
+## 2.0.0 — 2026-09-11
 
 - Updated to the September 2026 form structure, including ethics and science communication.
 - Added a shared bilingual profile, generated headings and real section references.

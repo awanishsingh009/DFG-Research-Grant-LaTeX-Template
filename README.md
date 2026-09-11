@@ -11,7 +11,7 @@ Supports Research Grants (Sachbeihilfe). Other programmes require their own veri
 
 ## Start writing
 
-1. Download a language-specific starter ZIP when available, or download/clone this repository.
+1. Download the [English starter](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/download/v2.0.0/dfg-starter-en.zip) or [German starter](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/download/v2.0.0/dfg-starter-de.zip), or use this repository as a GitHub template.
 2. Edit [metadata.tex](metadata.tex) (English) or [metadata-de.tex](metadata-de.tex) (German).
 3. Write in [sections/en](sections/en) or [sections/de](sections/de).
 4. Add your literature to [bibliography/references.bib](bibliography/references.bib).
@@ -46,7 +46,8 @@ Compile [example.tex](example.tex) or [example-de.tex](example-de.tex):
 The fictional examples demonstrate multiple applicants, citations, numbered
 cross-references, an equation, a figure, a schedule and a funding table. They
 are formatting demonstrations, not research proposals or approved declarations.
-Example PDFs and starter ZIPs can be prepared locally with the packaging command below.
+[Preview PDFs and starter ZIPs are available in the v2.0.0 release](https://github.com/awanishsingh009/DFG-Research-Grant-LaTeX-Template/releases/tag/v2.0.0).
+You can also prepare them locally with the packaging command below.
 
 ## Prepare a submission copy
 
